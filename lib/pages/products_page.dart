@@ -287,12 +287,13 @@ class _ProductsPageState extends State<ProductsPage> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              "\$${price}",
+                                              "Ksh ${price}", // changed from \$ to Ksh
                                               style: const TextStyle(
                                                 color: Colors.white70,
                                               ),
                                             ),
                                           ),
+
                                           EditButton(
                                             onTap: () {
                                               showDialog(
