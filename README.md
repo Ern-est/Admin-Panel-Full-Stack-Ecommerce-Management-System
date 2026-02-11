@@ -1,4 +1,4 @@
-# 🚀 Admin Panel – Full‑Stack Ecommerce Management System
+ Admin Panel – Full‑Stack Ecommerce Management System
 
 A **production‑ready admin dashboard** built to power modern ecommerce and service‑based applications. This panel provides **complete control over products, orders, staff, inventory, banners, discounts, ratings, and notifications**, all secured with **Supabase Row Level Security (RLS)** and implemented using **Flutter** for a clean, scalable UI.
 
@@ -6,19 +6,19 @@ This project was built end‑to‑end with real‑world constraints in mind  **n
 
 ---
 
-## ✨ Key Highlights
+ Key Highlights
 
-* 🔐 **Secure by design** (Supabase RLS)
-* 📦 **Full inventory & product lifecycle management**
-* 🧑‍💼 **Staff & order assignment tracking**
-* ⭐ **Order‑level ratings & feedback system**
-* 📊 **Visual analytics dashboard**
-* ⚡ **Real‑time data fetching**
-* 🎨 **Modern dark‑themed admin UI**
+  **Secure by design** (Supabase RLS)
+  **Full inventory & product lifecycle management**
+  **Staff & order assignment tracking**
+  **Order‑level ratings & feedback system**
+  **Visual analytics dashboard**
+  **Real‑time data fetching**
+  **Modern dark‑themed admin UI**
 
 ---
 
-## 🧭 Dashboard Overview
+## Dashboard Overview
 
 The dashboard gives admins instant insights at a glance:
 
@@ -32,61 +32,61 @@ Designed for **clarity, speed, and decision‑making**.
 
 ---
 
-## 🗂️ Core Modules & Features
+##  Core Modules & Features
 
-### 🛒 Products
+###  Products
 
 * Create, update, and delete products
 * Manage pricing and images
 * Stock status tracking (available, limited, out of stock)
 
-### 🧩 Categories & Sub‑Categories
+###  Categories & Sub‑Categories
 
 * Structured product organization
 * Scalable category hierarchy
 
-### 🏷️ Brands
+###  Brands
 
 * Brand creation and management
 * Product‑to‑brand association
 
-### 🔀 Variants & Variant Types
+###  Variants & Variant Types
 
 * Support for multiple product variations (e.g. size, color)
 * Clean separation between variant types and values
 
-### 🖼️ Banners
+###  Banners
 
 * Homepage promotional banners
 * Dynamic banner updates from admin panel
 
-### 💸 Discounts
+###  Discounts
 
 * Create and manage discounts
 * Ready for promotional campaigns
 
-### ⭐ Ratings & Feedback
+###  Ratings & Feedback
 
 * **Order‑level rating system** (1–5 stars)
 * Client comments stored securely
 * Admin‑only visibility
 * Staff attribution per order for performance insights
 
-### 📦 Orders
+###  Orders
 
 * Full order lifecycle tracking
 * Order status enforcement via database constraints
 * Staff assignment per order
 * Payment & delivery metadata support
 
-### 🔔 Notifications
+###  Notifications
 
 * Admin‑side notifications system
 * Ready for real‑time or push integrations
 
 ---
 
-## 🔐 Security Architecture (RLS)
+##  Security Architecture (RLS)
 
 This project heavily uses **Supabase Row Level Security**:
 
@@ -97,13 +97,13 @@ This project heavily uses **Supabase Row Level Security**:
 
 This ensures:
 
-* ✅ Data isolation
-* ✅ Zero data leakage
-* ✅ Production‑grade access control
+*  Data isolation
+*  Zero data leakage
+*  Production‑grade access control
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 * **Flutter** – Admin UI
 * **Supabase** – Backend (Postgres, Auth, RLS)
@@ -114,7 +114,7 @@ This ensures:
 
 ---
 
-## 📁 Architecture Highlights
+##  Architecture Highlights
 
 * Feature‑based folder structure
 * Dedicated service classes for database access
@@ -129,7 +129,7 @@ This makes the project:
 
 ---
 
-## 🎯 Use Cases
+##  Use Cases
 
 * Ecommerce admin dashboard
 * Food delivery backend panel
@@ -139,7 +139,7 @@ This makes the project:
 
 ---
 
-## 🧠 What This Project Demonstrates
+##  What This Project Demonstrates
 
 * Real‑world database design
 * Proper use of foreign keys & constraints
@@ -149,11 +149,11 @@ This makes the project:
 
 ---
 
-## 🚀 Status
+##  Status
 
-✅ **Admin Panel Complete**
-🛠️ Ready for client‑side app integration
-📈 Ready for analytics & reporting extensions
+ **Admin Panel Complete**
+ Ready for client‑side app integration
+ Ready for analytics & reporting extensions
 
 ---
 <img width="1583" height="892" alt="dashboard_screen" src="https://github.com/user-attachments/assets/afd6d62d-9af9-4458-8db0-d2d3de813821" />
@@ -165,14 +165,14 @@ This makes the project:
 <img width="1603" height="892" alt="staff_dashboard_screen" src="https://github.com/user-attachments/assets/60400a3e-63bf-496c-b578-ffca9576bff2" />
 <img width="1624" height="892" alt="staff_settings_screen" src="https://github.com/user-attachments/assets/c5f76826-4c73-4fcb-bb46-4152156284db" />
 
-## 🤝 Author
+## Author
 
 Built with care and production discipline by **Ernest Cheruiyot**.
 
 > *This project reflects real‑world engineering decisions, not tutorial shortcuts.*
 
 ---
-## 🔒 Source Code Notice
+## Source Code Notice
 
 This public repository intentionally excludes core business logic,
 backend service layers, and sensitive configuration files.
@@ -189,5 +189,4 @@ feel free to reach out.
 
 
 
-
-⭐ If you find this useful or inspiring, feel free to star the repository!
+ If you find this useful or inspiring, feel free to star the repository!
