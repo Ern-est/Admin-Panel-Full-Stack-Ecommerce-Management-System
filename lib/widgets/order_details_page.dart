@@ -38,6 +38,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
   Future<void> loadOrderDetails() async {
     setState(() => loading = true);
+
     items = await OrdersService.fetchOrderItems(widget.order.id);
 
     if (widget.order.assignedToId != null) {
@@ -51,25 +52,20 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
   Future<void> _updateStatus(String newStatus) async {
     setState(() => updatingStatus = true);
-
     try {
       await OrdersService.updateOrderStatus(
         orderId: widget.order.id,
         status: newStatus,
       );
-
       if (!mounted) return;
-      Navigator.pop(context, true); // refresh only after backend success
+      Navigator.pop(context, true); // refresh after backend success
     } catch (e) {
       if (!mounted) return;
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to update order status')),
       );
     } finally {
-      if (mounted) {
-        setState(() => updatingStatus = false);
-      }
+      if (mounted) setState(() => updatingStatus = false);
     }
   }
 
@@ -160,10 +156,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   }
 
   String formatDate(DateTime date) =>
-      "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour}:${date.minute.toString().padLeft(2, '0')}";
+      "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
 
   @override
   Widget build(BuildContext context) {
+    final isCancelled = widget.order.status == 'cancelled';
+
     return Scaffold(
       backgroundColor: const Color(0xFF0F1113),
       appBar: AppBar(
@@ -184,12 +182,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               ),
             ),
             const SizedBox(height: 6),
+
+            // Status Row
             Row(
               children: [
                 const Text('Status: ', style: TextStyle(color: Colors.white70)),
-                if (widget.role == 'staff' &&
-                    widget.order.assignedToId ==
-                        StaffService.currentUserId) ...[
+                if (!isCancelled &&
+                    widget.role == 'staff' &&
+                    widget.order.assignedToId == StaffService.currentUserId)
                   DropdownButton<String>(
                     value: widget.order.status,
                     dropdownColor: Colors.grey[900],
@@ -206,20 +206,23 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                             )
                             .toList(),
                     onChanged: (value) {
-                      if (value != null) {
-                        _updateStatus(value);
-                      }
+                      if (value != null) _updateStatus(value);
                     },
-                  ),
-
-                  if (updatingStatus) const CircularProgressIndicator(),
-                ] else
+                  )
+                else
                   Text(
                     widget.order.status,
-                    style: const TextStyle(color: Colors.white70),
+                    style: TextStyle(
+                      color: isCancelled ? Colors.red : Colors.white70,
+                      fontWeight:
+                          isCancelled ? FontWeight.bold : FontWeight.normal,
+                    ),
                   ),
+                if (updatingStatus) const SizedBox(width: 10),
+                if (updatingStatus) const CircularProgressIndicator(),
               ],
             ),
+
             const SizedBox(height: 6),
             Text(
               'Assigned to: ${assignedStaff != null ? assignedStaff!.fullName ?? assignedStaff!.email : "Not yet assigned!"}',
@@ -239,7 +242,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
-
             const SizedBox(height: 12),
             const Divider(color: Colors.white24),
             const Text(
@@ -251,6 +253,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               ),
             ),
             const SizedBox(height: 10),
+
+            // Order Items List
             loading
                 ? const Center(child: CircularProgressIndicator())
                 : items.isEmpty
@@ -287,6 +291,43 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     },
                   ),
                 ),
+
+            // Cancellation Info
+            if (isCancelled)
+              Card(
+                color: Colors.red.shade900,
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Cancelled by: ${widget.order.cancelledBy ?? 'Unknown'}",
+                        style: const TextStyle(
+                          color: Colors.yellow,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      if (widget.order.cancelReason != null)
+                        Text(
+                          "Reason: ${widget.order.cancelReason}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      const SizedBox(height: 6),
+                      if (widget.order.cancelledAt != null)
+                        Text(
+                          "At: ${formatDate(widget.order.cancelledAt!)}",
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
