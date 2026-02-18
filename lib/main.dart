@@ -1,5 +1,6 @@
 import 'package:admin_panel/auth/admin_login_screen.dart';
 import 'package:admin_panel/auth/onboarding_screen.dart';
+import 'package:admin_panel/controllers/ratings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +17,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationController()),
+        ChangeNotifierProvider(create: (_) => RatingsProvider()),
       ],
       child: const MyApp(),
     ),
