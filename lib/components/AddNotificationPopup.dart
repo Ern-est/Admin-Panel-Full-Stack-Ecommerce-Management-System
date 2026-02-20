@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 import 'package:admin_panel/core/config.dart';
 
 class AddNotificationPopup extends StatefulWidget {
@@ -35,7 +37,7 @@ class _AddNotificationPopupState extends State<AddNotificationPopup> {
     String? imageUrl;
 
     try {
-      // Upload image only on save
+      // Upload image to Supabase storage if selected
       if (_imageFile != null) {
         final bytes = await _imageFile!.readAsBytes();
         final fileName =
@@ -49,6 +51,7 @@ class _AddNotificationPopupState extends State<AddNotificationPopup> {
             .getPublicUrl(fileName);
       }
 
+      // Insert into Supabase notifications table
       await AppConfig.supabase.from('notifications').insert({
         'title': _titleController.text.trim(),
         'description': _descriptionController.text.trim(),
@@ -56,6 +59,35 @@ class _AddNotificationPopupState extends State<AddNotificationPopup> {
         'status': 'draft',
         'created_at': DateTime.now().toIso8601String(),
       });
+
+      // ✅ Call Edge Function to send push notification
+      // ✅ Call Edge Function to send push notification
+      final edgeUrl = Uri.parse(
+        'https://xnknxlkebtvbiauvazly.supabase.co/functions/v1/send-push-notification',
+      );
+
+      final edgeResponse = await http.post(
+        edgeUrl,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer ${AppConfig.serviceRoleKey}',
+        },
+        body: jsonEncode({
+          "record": {
+            "title": _titleController.text.trim(),
+            "description": _descriptionController.text.trim(),
+            "image_url": imageUrl,
+          },
+        }),
+      );
+
+      if (edgeResponse.statusCode != 200) {
+        debugPrint(
+          "Edge function returned error: ${edgeResponse.statusCode} - ${edgeResponse.body}",
+        );
+      } else {
+        debugPrint("Push notification sent successfully!");
+      }
 
       widget.onSaved();
       Navigator.pop(context);
